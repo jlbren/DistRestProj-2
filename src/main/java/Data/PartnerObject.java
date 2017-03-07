@@ -33,9 +33,9 @@ public class PartnerObject {
 				(a.Location.compareTo(b.Location) == 0); 
 	}
 	
-	public static TrainerObject FromJson(String json) {
+	public static PartnerObject FromJson(String json) {
 		Gson gson = new Gson();
-		TrainerObject instance = gson.fromJson(json, TrainerObject.class);
+		PartnerObject instance = gson.fromJson(json, PartnerObject.class);
 		return instance;
 	}
 	

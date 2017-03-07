@@ -4,9 +4,9 @@ import java.io.IOException;
 import java.net.*;
 import java.util.*;
 
-import Data.TrainerObject;
+import Data.PartnerObject;
+import Response.PartnerResponse;
 import Response.SimpleResponse;
-import Response.TrainerResponse;
 
 public class PartnerClient {	
 	private final String _baseAddress;
@@ -15,16 +15,16 @@ public class PartnerClient {
 		_baseAddress = baseAddress;
 	}
 
-	public PartnerObject[] getAllPartjers() throws Exception {
+	public PartnerObject[] getAllPartners() throws Exception {
 		ClientAction action = new ClientAction();
 		URL address = new URL(_baseAddress + "all");
 		String json = action.Get(address, HttpContentType.JSON);
-		PartnerResponse response = TrainerResponse.FromJson(json);
+		PartnerResponse response = PartnerResponse.FromJson(json);
 		ThrowFor(response);
 		return response.Partners;
 	}
 	
-	public TrainerObject getPartner(long id) throws Exception {
+	public PartnerObject getPartner(long id) throws Exception {
 		ClientAction action = new ClientAction();
 		URL address = new URL(_baseAddress + new Long(id).toString());
 		String json = action.Get(address, HttpContentType.JSON);
@@ -35,7 +35,7 @@ public class PartnerClient {
 	
 	public void addPartner(PartnerObject partner) throws Exception {
 		ClientAction action = new ClientAction();
-		URL address = new URL(_baseAddress + new Long(trainer.Id).toString());
+		URL address = new URL(_baseAddress + new Long(partner.Id).toString());
 		String partnerJson = partner.ToJson();
 		String json = action.Post(address, HttpContentType.JSON, partnerJson);
 		SimpleResponse response = SimpleResponse.FromJson(json);

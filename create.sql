@@ -35,5 +35,5 @@ create table if not exists Partners(
 );
 
 insert into Partners values (1, 1, 1, "Lavendar Town");
-insert into Partners values(2, 2, 4, "Oak's Lab"); 
+insert into Partners values(2, 2, 4, "Oak Lab"); 
 insert into Partners values(3, 3, 7, "Victory Road");  

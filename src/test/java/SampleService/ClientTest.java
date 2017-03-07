@@ -10,14 +10,16 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import Client.PartnerClient;
 import Client.PokemonClient;
 import Client.TrainerClient;
+import Data.PartnerObject;
 import Data.PokemonObject;
 import Data.TrainerObject;
 
 import static org.junit.Assert.assertEquals;
 
-public class MyResourceTest {
+public class ClientTest {
 
     private HttpServer server;
     private WebTarget target;
@@ -113,6 +115,40 @@ public class MyResourceTest {
 		
 		for(PokemonObject c : all) {
 			if(c.Id == pokemon.Id) {
+				assertEquals(true,false); // force failure to indicate delete did not happen 
+			}
+		}
+    
+    }
+    
+    @Test
+    public void testPartners() throws Exception{
+    	PartnerClient client = new PartnerClient("http://localhost:8080/myapp/partners/");
+		
+		PartnerObject partner = new PartnerObject(9,1,1,"TallGrass");
+		//create
+		client.addPartner(partner);
+		//read
+		PartnerObject added = client.getPartner(partner.Id);
+		
+		assertEquals(true,(added!=null)); // silly workaround to assert not null  
+		
+		//update
+		PartnerObject updated = new PartnerObject(added.Id, 1,1,"Surfing");
+		
+		client.updatePartner(updated);
+		
+		added = client.getPartner(partner.Id); 
+		
+		assertEquals(added.Location, "Surfing"); 
+		
+		//delete 
+		client.deletePartner(partner.Id);
+		
+		PartnerObject[] all = client.getAllPartners();
+		
+		for(PartnerObject c : all) {
+			if(c.Id == partner.Id) {
 				assertEquals(true,false); // force failure to indicate delete did not happen 
 			}
 		}

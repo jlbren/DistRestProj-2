@@ -6,6 +6,8 @@ import java.util.Collection;
 
 import com.google.gson.Gson;
 
+import Data.PartnerObject;
+
 
 public class PartnerResponse extends SimpleResponse {
 	public final PartnerObject[] Partners;
