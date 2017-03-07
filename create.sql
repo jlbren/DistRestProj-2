@@ -26,10 +26,14 @@ insert into Trainer values(3, 'Gary', 0);
 
 create table if not exists Partners(
 	id int, 
-	pkmnID int,
 	trainerID int, 
-	met varchar(50),
+	pkmnID int,
+	location varchar(50),
 	PRIMARY KEY(id), 
 	FOREIGN KEY(pkmnID) REFERENCES Pokemon(id),
 	FOREIGN KEY(trainerID) REFERENCES Trainer(id)
 );
+
+insert into Partners values (1, 1, 1, "Lavendar Town");
+insert into Partners values(2, 2, 4, "Oak's Lab"); 
+insert into Partners values(3, 3, 7, "Victory Road");  
