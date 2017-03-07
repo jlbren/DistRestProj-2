@@ -16,6 +16,7 @@ import Client.TrainerClient;
 import Data.PartnerObject;
 import Data.PokemonObject;
 import Data.TrainerObject;
+import Service.Main;
 
 import static org.junit.Assert.assertEquals;
 

@@ -1,57 +1,59 @@
-package SampleService;
+package Service;
 
 import java.sql.SQLException;
 import java.util.*;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 
-import Data.TrainerDataAccessObject;
+import Data.PokemonDataAccessObject;
+import Data.PokemonObject;
 import Data.TrainerObject;
+import Response.PokemonResponse;
 import Response.SimpleResponse;
 import Response.TrainerResponse;
+
  
-@Path("/trainer")
-public class TrainerService {
-	private final TrainerDataAccessObject _trainerDataAccess;
-	public TrainerService(){
-		_trainerDataAccess = new TrainerDataAccessObject();
+@Path("/pokemon")
+public class PokemonService {
+	private final PokemonDataAccessObject _pokemonDataAccess;
+	public PokemonService(){
+		_pokemonDataAccess = new PokemonDataAccessObject();
 	}
 	
 	@GET
 	@Path("/all")
 	@Produces(MediaType.APPLICATION_JSON)
-	public String getAllTrainers() {
-		TrainerResponse response;
+	public String getAllPokemon() {
+		PokemonResponse response;
 		try{
-			Collection<TrainerObject> all = _trainerDataAccess.ReadAllTrainers();
-		    response = TrainerResponse.Success(all);
+			Collection<PokemonObject> all = _pokemonDataAccess.ReadAllPokemon();
+		    response = PokemonResponse.Success(all);
 		} catch(Exception e) {
-			response = TrainerResponse.Error(e);
+			response = PokemonResponse.Error(e);
 		}
 		return response.ToJson();
 	}
 	
-
 	@GET
 	@Path("{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public String getTrainer(@PathParam("id") long id) {
-		TrainerResponse response;
+		PokemonResponse response;
 		try{
-			Collection<TrainerObject> all = _trainerDataAccess.ReadAllTrainers();
+			Collection<PokemonObject> all = _pokemonDataAccess.ReadAllPokemon();
 		  
-			Optional<TrainerObject> match = all
+			Optional<PokemonObject> match = all
 					.stream()
 					.filter(c -> c.Id == id)
 					.findFirst();
 			
 			if (match.isPresent()) {
-				response = TrainerResponse.Success(new TrainerObject[]{match.get()});
+				response = PokemonResponse.Success(new PokemonObject[]{match.get()});
 			} else {
-				response = TrainerResponse.Error("Trainer not found");
+				response = PokemonResponse.Error("Pokemon not found");
 			}
 		} catch(Exception e){
-			response = TrainerResponse.Error(e);
+			response = PokemonResponse.Error(e);
 		}
 		return response.ToJson();
 	}
@@ -60,20 +62,20 @@ public class TrainerService {
 	@POST
 	@Path("{id}")
 	@Produces(MediaType.TEXT_PLAIN)
-	public String addTrainer(@PathParam("id") long id, String content) {
+	public String addPokemon(@PathParam("id") long id, String content) {
 		SimpleResponse response;
 		try {
-			TrainerObject newObj = TrainerObject.FromJson(content);
+			PokemonObject newObj = PokemonObject.FromJson(content);
 			if(newObj.Id != id) {
 				response = SimpleResponse.Error("Error, ID did not match");
 			} else {
-				System.out.println("gucci"); 
-				_trainerDataAccess.Insert(newObj);
+				 
+				_pokemonDataAccess.Insert(newObj);
 				response = SimpleResponse.Success();
 			}
 		} catch(SQLException e) {
 			if(e.getMessage().contains("Duplicate")){
-				response = SimpleResponse.Error("Trainer with id = " + id + " already exists");
+				response = SimpleResponse.Error("Pokemon with id = " + id + " already exists");
 			} else {
 				System.out.println(content); 
 				response = SimpleResponse.Error(e);
@@ -88,14 +90,14 @@ public class TrainerService {
 	@PUT
 	@Path("{id}")
 	@Produces(MediaType.TEXT_PLAIN)
-	public String updateTrainer(@PathParam("id") long id, String content) {
+	public String updatePokemon(@PathParam("id") long id, String content) {
 		SimpleResponse response;
 		try {
-			TrainerObject newObj = TrainerObject.FromJson(content);
+			PokemonObject newObj = PokemonObject.FromJson(content);
 			if(newObj.Id != id) {
 				response = SimpleResponse.Error("Error, ID did not match");
 			} else {
-				_trainerDataAccess.Update(newObj);
+				_pokemonDataAccess.Update(newObj);
 				response = SimpleResponse.Success();
 			}
 		} catch(Exception e) {
@@ -107,16 +109,17 @@ public class TrainerService {
 	@DELETE
 	@Path("{id}")
 	@Produces(MediaType.TEXT_PLAIN)
-	public String deleteTrainer(@PathParam("id") long id) {
+	public String deletePokemon(@PathParam("id") long id) {
 		SimpleResponse response;
 		try {
-			_trainerDataAccess.Delete(id);
+			_pokemonDataAccess.Delete(id);
 			response = SimpleResponse.Success();
 		} catch(Exception e) {
 			response = SimpleResponse.Error(e);
 		}
 		return response.ToJson();
 	}
+
 
 	
 	

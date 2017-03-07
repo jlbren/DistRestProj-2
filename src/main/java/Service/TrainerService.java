@@ -1,57 +1,57 @@
-package SampleService;
+package Service;
 
 import java.sql.SQLException;
 import java.util.*;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 
-import Data.PartnerDataAccessObject;
-import Data.PartnerObject;
-import Response.PartnerResponse;
+import Data.TrainerDataAccessObject;
+import Data.TrainerObject;
 import Response.SimpleResponse;
-
+import Response.TrainerResponse;
  
-@Path("/partners")
-public class PartnerService {
-	private final PartnerDataAccessObject _partnerDataAccess;
-	public PartnerService(){
-		_partnerDataAccess = new PartnerDataAccessObject();
+@Path("/trainer")
+public class TrainerService {
+	private final TrainerDataAccessObject _trainerDataAccess;
+	public TrainerService(){
+		_trainerDataAccess = new TrainerDataAccessObject();
 	}
 	
 	@GET
 	@Path("/all")
 	@Produces(MediaType.APPLICATION_JSON)
-	public String getAllPartners() {
-		PartnerResponse response;
+	public String getAllTrainers() {
+		TrainerResponse response;
 		try{
-			Collection<PartnerObject> all = _partnerDataAccess.ReadAllPartners();
-		    response = PartnerResponse.Success(all);
+			Collection<TrainerObject> all = _trainerDataAccess.ReadAllTrainers();
+		    response = TrainerResponse.Success(all);
 		} catch(Exception e) {
-			response = PartnerResponse.Error(e);
+			response = TrainerResponse.Error(e);
 		}
 		return response.ToJson();
 	}
 	
+
 	@GET
 	@Path("{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public String getTrainer(@PathParam("id") long id) {
-		PartnerResponse response;
+		TrainerResponse response;
 		try{
-			Collection<PartnerObject> all = _partnerDataAccess.ReadAllPartners();
+			Collection<TrainerObject> all = _trainerDataAccess.ReadAllTrainers();
 		  
-			Optional<PartnerObject> match = all
+			Optional<TrainerObject> match = all
 					.stream()
 					.filter(c -> c.Id == id)
 					.findFirst();
 			
 			if (match.isPresent()) {
-				response = PartnerResponse.Success(new PartnerObject[]{match.get()});
+				response = TrainerResponse.Success(new TrainerObject[]{match.get()});
 			} else {
-				response = PartnerResponse.Error("Partner not found");
+				response = TrainerResponse.Error("Trainer not found");
 			}
 		} catch(Exception e){
-			response = PartnerResponse.Error(e);
+			response = TrainerResponse.Error(e);
 		}
 		return response.ToJson();
 	}
@@ -60,20 +60,20 @@ public class PartnerService {
 	@POST
 	@Path("{id}")
 	@Produces(MediaType.TEXT_PLAIN)
-	public String addPartner(@PathParam("id") long id, String content) {
+	public String addTrainer(@PathParam("id") long id, String content) {
 		SimpleResponse response;
 		try {
-			PartnerObject newObj = PartnerObject.FromJson(content);
+			TrainerObject newObj = TrainerObject.FromJson(content);
 			if(newObj.Id != id) {
 				response = SimpleResponse.Error("Error, ID did not match");
 			} else {
-				 
-				_partnerDataAccess.Insert(newObj);
+				System.out.println("gucci"); 
+				_trainerDataAccess.Insert(newObj);
 				response = SimpleResponse.Success();
 			}
 		} catch(SQLException e) {
 			if(e.getMessage().contains("Duplicate")){
-				response = SimpleResponse.Error("Partner with id = " + id + " already exists");
+				response = SimpleResponse.Error("Trainer with id = " + id + " already exists");
 			} else {
 				System.out.println(content); 
 				response = SimpleResponse.Error(e);
@@ -88,14 +88,14 @@ public class PartnerService {
 	@PUT
 	@Path("{id}")
 	@Produces(MediaType.TEXT_PLAIN)
-	public String updatePartner(@PathParam("id") long id, String content) {
+	public String updateTrainer(@PathParam("id") long id, String content) {
 		SimpleResponse response;
 		try {
-			PartnerObject newObj = PartnerObject.FromJson(content);
+			TrainerObject newObj = TrainerObject.FromJson(content);
 			if(newObj.Id != id) {
 				response = SimpleResponse.Error("Error, ID did not match");
 			} else {
-				_partnerDataAccess.Update(newObj);
+				_trainerDataAccess.Update(newObj);
 				response = SimpleResponse.Success();
 			}
 		} catch(Exception e) {
@@ -107,15 +107,17 @@ public class PartnerService {
 	@DELETE
 	@Path("{id}")
 	@Produces(MediaType.TEXT_PLAIN)
-	public String deletePartner(@PathParam("id") long id) {
+	public String deleteTrainer(@PathParam("id") long id) {
 		SimpleResponse response;
 		try {
-			_partnerDataAccess.Delete(id);
+			_trainerDataAccess.Delete(id);
 			response = SimpleResponse.Success();
 		} catch(Exception e) {
 			response = SimpleResponse.Error(e);
 		}
 		return response.ToJson();
 	}
+
+	
 	
 }
