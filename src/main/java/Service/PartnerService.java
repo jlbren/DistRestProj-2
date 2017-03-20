@@ -5,6 +5,7 @@ import java.util.*;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 
+import Chaos.ChaosSource;
 import Data.PartnerDataAccessObject;
 import Data.PartnerObject;
 import Response.PartnerResponse;
@@ -24,6 +25,8 @@ public class PartnerService {
 	public String getAllPartners() {
 		PartnerResponse response;
 		try{
+			ChaosSource.ForService("Partner").ForMethod("getAllPartners").run();
+
 			Collection<PartnerObject> all = _partnerDataAccess.ReadAllPartners();
 		    response = PartnerResponse.Success(all);
 		} catch(Exception e) {
@@ -35,11 +38,12 @@ public class PartnerService {
 	@GET
 	@Path("{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public String getTrainer(@PathParam("id") long id) {
+	public String getPartner(@PathParam("id") long id) {
 		PartnerResponse response;
 		try{
+			ChaosSource.ForService("Partner").ForMethod("getPartner").run();
+
 			Collection<PartnerObject> all = _partnerDataAccess.ReadAllPartners();
-		  
 			Optional<PartnerObject> match = all
 					.stream()
 					.filter(c -> c.Id == id)
@@ -63,6 +67,8 @@ public class PartnerService {
 	public String addPartner(@PathParam("id") long id, String content) {
 		SimpleResponse response;
 		try {
+			ChaosSource.ForService("Partner").ForMethod("addPartner").run();
+
 			PartnerObject newObj = PartnerObject.FromJson(content);
 			if(newObj.Id != id) {
 				response = SimpleResponse.Error("Error, ID did not match");
@@ -91,6 +97,8 @@ public class PartnerService {
 	public String updatePartner(@PathParam("id") long id, String content) {
 		SimpleResponse response;
 		try {
+			ChaosSource.ForService("Partner").ForMethod("updatePartner").run();
+
 			PartnerObject newObj = PartnerObject.FromJson(content);
 			if(newObj.Id != id) {
 				response = SimpleResponse.Error("Error, ID did not match");
@@ -110,6 +118,8 @@ public class PartnerService {
 	public String deletePartner(@PathParam("id") long id) {
 		SimpleResponse response;
 		try {
+			ChaosSource.ForService("Partner").ForMethod("deletePartner").run();
+
 			_partnerDataAccess.Delete(id);
 			response = SimpleResponse.Success();
 		} catch(Exception e) {

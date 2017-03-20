@@ -1,5 +1,7 @@
 package Data;
 
+import Chaos.ChaosSource;
+
 import java.sql.*;
 import java.util.*;
 
@@ -15,6 +17,9 @@ public class PartnerDataAccessObject {
 		List<PartnerObject> partners = new ArrayList<PartnerObject>();
 		Database db = new Database();
 		try{
+			//see if random problem will occur
+			ChaosSource.ForDataAccess("Partner").ForMethod("ReadAllPartners").run();
+			//continue if problem didn't occur
 			db.ExecuteReader("Select * from " + TableName, (ResultSet row)->{
 				long id = row.getLong(row.findColumn(IdCol));
 				long trainerId = row.getLong(row.findColumn(TrainerCol)); 
@@ -31,6 +36,7 @@ public class PartnerDataAccessObject {
 	public void Insert(PartnerObject newObj) throws Exception {
 		Database db = new Database();
 		try {
+			ChaosSource.ForDataAccess("Partner").ForMethod("Insert").run();
 			String stm = "insert into " + TableName + 
 					" (" + IdCol + ", " + TrainerCol + ", " + PkmnCol + ", " + LocCol +") " + 
 					"values (?, ?, ?, ?)";
@@ -44,6 +50,7 @@ public class PartnerDataAccessObject {
 	public void Update(PartnerObject partner) throws Exception {
 		Database db = new Database();
 		try {
+			ChaosSource.ForDataAccess("Partner").ForMethod("Update").run();
 			String stm = "update " + TableName + " " +
 					"set " + TrainerCol + " = ?, " 
 						   + PkmnCol + " = ?, " 
@@ -60,6 +67,7 @@ public class PartnerDataAccessObject {
 	public void Delete(long id) throws Exception {
 		Database db = new Database();
 		try {
+			ChaosSource.ForDataAccess("Partner").ForMethod("Delete").run();
 			String stm = "delete from " + TableName + " where " + IdCol + " = ?";
 			Object[] parameters = new Object[]{id};
 			db.RunNonQuery(stm, parameters);
