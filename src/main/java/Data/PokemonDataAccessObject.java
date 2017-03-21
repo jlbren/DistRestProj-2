@@ -1,5 +1,7 @@
 package Data;
 
+import Chaos.ChaosSource;
+
 import java.sql.*;
 import java.util.*;
 
@@ -15,6 +17,7 @@ public class PokemonDataAccessObject {
 		List<PokemonObject> pokemons = new ArrayList<PokemonObject>();
 		Database db = new Database();
 		try{
+			ChaosSource.ForDataAccess("Pokemon").ForMethod("ReadAllPokemon").run();
 			db.ExecuteReader("Select * from " + TableName, (ResultSet row)->{
 				long id = row.getLong(row.findColumn(IdCol));
 				String name = row.getString(row.findColumn(NameCol)); 
@@ -31,6 +34,7 @@ public class PokemonDataAccessObject {
 	public void Insert(PokemonObject newObj) throws Exception {
 		Database db = new Database();
 		try {
+			ChaosSource.ForDataAccess("Pokemon").ForMethod("Insert").run();
 			String stm = "insert into " + TableName + 
 					" (" + IdCol + ", " + NameCol + ", " + DescCol + ", " + NatureCol +") " + 
 					"values (?, ?, ?, ?)";
@@ -44,6 +48,7 @@ public class PokemonDataAccessObject {
 	public void Update(PokemonObject pokemon) throws Exception {
 		Database db = new Database();
 		try {
+			ChaosSource.ForDataAccess("Pokemon").ForMethod("Update").run();
 			String stm = "update " + TableName + " " +
 					"set " + NameCol + " = ?, " 
 						   + DescCol + " = ?, " 
@@ -60,6 +65,7 @@ public class PokemonDataAccessObject {
 	public void Delete(long id) throws Exception {
 		Database db = new Database();
 		try {
+			ChaosSource.ForDataAccess("Pokemon").ForMethod("Delete").run();
 			String stm = "delete from " + TableName + " where " + IdCol + " = ?";
 			Object[] parameters = new Object[]{id};
 			db.RunNonQuery(stm, parameters);

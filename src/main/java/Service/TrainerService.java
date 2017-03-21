@@ -5,6 +5,7 @@ import java.util.*;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 
+import Chaos.ChaosSource;
 import Data.TrainerDataAccessObject;
 import Data.TrainerObject;
 import Response.SimpleResponse;
@@ -23,6 +24,7 @@ public class TrainerService {
 	public String getAllTrainers() {
 		TrainerResponse response;
 		try{
+			ChaosSource.ForService("Trainer").ForMethod("getAllTrainers").run();
 			Collection<TrainerObject> all = _trainerDataAccess.ReadAllTrainers();
 		    response = TrainerResponse.Success(all);
 		} catch(Exception e) {
@@ -38,6 +40,7 @@ public class TrainerService {
 	public String getTrainer(@PathParam("id") long id) {
 		TrainerResponse response;
 		try{
+			ChaosSource.ForService("Trainer").ForMethod("getTrainer").run();
 			Collection<TrainerObject> all = _trainerDataAccess.ReadAllTrainers();
 		  
 			Optional<TrainerObject> match = all
@@ -63,6 +66,7 @@ public class TrainerService {
 	public String addTrainer(@PathParam("id") long id, String content) {
 		SimpleResponse response;
 		try {
+			ChaosSource.ForService("Trainer").ForMethod("addTrainer").run();
 			TrainerObject newObj = TrainerObject.FromJson(content);
 			if(newObj.Id != id) {
 				response = SimpleResponse.Error("Error, ID did not match");
@@ -91,6 +95,7 @@ public class TrainerService {
 	public String updateTrainer(@PathParam("id") long id, String content) {
 		SimpleResponse response;
 		try {
+			ChaosSource.ForService("Trainer").ForMethod("updateTrainer").run();
 			TrainerObject newObj = TrainerObject.FromJson(content);
 			if(newObj.Id != id) {
 				response = SimpleResponse.Error("Error, ID did not match");
@@ -110,6 +115,7 @@ public class TrainerService {
 	public String deleteTrainer(@PathParam("id") long id) {
 		SimpleResponse response;
 		try {
+			ChaosSource.ForService("Trainer").ForMethod("deleteTrainer").run();
 			_trainerDataAccess.Delete(id);
 			response = SimpleResponse.Success();
 		} catch(Exception e) {

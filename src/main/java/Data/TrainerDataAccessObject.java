@@ -1,5 +1,7 @@
 package Data;
 
+import Chaos.ChaosSource;
+
 import java.sql.*;
 import java.util.*;
 
@@ -14,6 +16,7 @@ public class TrainerDataAccessObject {
 		List<TrainerObject> trainers = new ArrayList<TrainerObject>();
 		Database db = new Database();
 		try{
+			ChaosSource.ForDataAccess("Trainer").ForMethod("ReadAllTrainers").run();
 			db.ExecuteReader("Select * from " + TableName, (ResultSet row)->{
 				long id = row.getLong(row.findColumn(IdCol));
 				String name = row.getString(row.findColumn(NameCol)); 
@@ -30,6 +33,7 @@ public class TrainerDataAccessObject {
 	public void Insert(TrainerObject newObj) throws Exception {
 		Database db = new Database();
 		try {
+			ChaosSource.ForDataAccess("Trainer").ForMethod("Insert").run();
 			String stm = "insert into " + TableName + 
 					" (" + IdCol + ", " + NameCol + ", " + BadgeCol +") " + 
 					"values (?, ?, ?)";
@@ -43,6 +47,7 @@ public class TrainerDataAccessObject {
 	public void Update(TrainerObject trainer) throws Exception {
 		Database db = new Database();
 		try {
+			ChaosSource.ForDataAccess("Trainer").ForMethod("Update").run();
 			String stm = "update " + TableName + " " +
 					"set " + NameCol + " = ?, " 
 						   + BadgeCol+ " = ? " +
@@ -58,6 +63,7 @@ public class TrainerDataAccessObject {
 	public void Delete(long id) throws Exception {
 		Database db = new Database();
 		try {
+			ChaosSource.ForDataAccess("Trainer").ForMethod("Delete").run();
 			String stm = "delete from " + TableName + " where " + IdCol + " = ?";
 			Object[] parameters = new Object[]{id};
 			db.RunNonQuery(stm, parameters);

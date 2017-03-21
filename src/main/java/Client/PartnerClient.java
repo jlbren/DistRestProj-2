@@ -48,7 +48,7 @@ public class PartnerClient {
 			method.PerformWaitIfNeeded();
 			method.ThrowErrorFromResponseIfAppropriate();
 		} while(method.ShouldRetry());
-
+		ThrowFor(response);
 		return response.Partners[0];
 	}
 	
@@ -65,6 +65,7 @@ public class PartnerClient {
 			method.PerformWaitIfNeeded();
 			method.ThrowErrorFromResponseIfAppropriate();
 		} while(method.ShouldRetry());
+		ThrowFor(response);
 	}
 	
 	public void updatePartner(PartnerObject partner) throws Exception {
@@ -80,6 +81,7 @@ public class PartnerClient {
 			method.PerformWaitIfNeeded();
 			method.ThrowErrorFromResponseIfAppropriate();
 		} while(method.ShouldRetry());
+		ThrowFor(response);
 	}
 	
 	public void deletePartner(long id) throws Exception {
@@ -95,6 +97,7 @@ public class PartnerClient {
 			method.PerformWaitIfNeeded();
 			method.ThrowErrorFromResponseIfAppropriate();
 		} while(method.ShouldRetry());
+		ThrowFor(response);
 	}
 	
 	private static void ThrowFor(SimpleResponse response) throws Exception {

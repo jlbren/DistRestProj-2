@@ -5,6 +5,7 @@ import java.util.*;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 
+import Chaos.ChaosSource;
 import Data.PokemonDataAccessObject;
 import Data.PokemonObject;
 import Data.TrainerObject;
@@ -26,6 +27,8 @@ public class PokemonService {
 	public String getAllPokemon() {
 		PokemonResponse response;
 		try{
+			ChaosSource.ForService("Pokemon").ForMethod("getAllPokemon").run();
+
 			Collection<PokemonObject> all = _pokemonDataAccess.ReadAllPokemon();
 		    response = PokemonResponse.Success(all);
 		} catch(Exception e) {
@@ -37,9 +40,11 @@ public class PokemonService {
 	@GET
 	@Path("{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public String getTrainer(@PathParam("id") long id) {
+	public String getPokemon(@PathParam("id") long id) {
 		PokemonResponse response;
 		try{
+			ChaosSource.ForService("Pokemon").ForMethod("getPokemon").run();
+
 			Collection<PokemonObject> all = _pokemonDataAccess.ReadAllPokemon();
 		  
 			Optional<PokemonObject> match = all
@@ -65,6 +70,7 @@ public class PokemonService {
 	public String addPokemon(@PathParam("id") long id, String content) {
 		SimpleResponse response;
 		try {
+			ChaosSource.ForService("Pokemon").ForMethod("addPokemon").run();
 			PokemonObject newObj = PokemonObject.FromJson(content);
 			if(newObj.Id != id) {
 				response = SimpleResponse.Error("Error, ID did not match");
@@ -93,6 +99,7 @@ public class PokemonService {
 	public String updatePokemon(@PathParam("id") long id, String content) {
 		SimpleResponse response;
 		try {
+			ChaosSource.ForService("Pokemon").ForMethod("updatePokemon").run();
 			PokemonObject newObj = PokemonObject.FromJson(content);
 			if(newObj.Id != id) {
 				response = SimpleResponse.Error("Error, ID did not match");
@@ -112,6 +119,7 @@ public class PokemonService {
 	public String deletePokemon(@PathParam("id") long id) {
 		SimpleResponse response;
 		try {
+			ChaosSource.ForService("Pokemon").ForMethod("deletePokemon").run();
 			_pokemonDataAccess.Delete(id);
 			response = SimpleResponse.Success();
 		} catch(Exception e) {
