@@ -12,21 +12,21 @@
 + Successful build and test confirmation indicates successful installation
 
 ### Database Schema and Sample Values
-* Pokemon *  
+*Pokemon*  
 
 | Id | Name      | Description         | Nature  |
 |----|-----------|---------------------|---------|
 | 1  | Bulbasaur | Is it a plant or..? | Relaxed |
 
 
-* Trainer *
+*Trainer*
 
 | Id | Name | Badges |
 |----|------|--------|
 | 1  | Ash  | 8      |
 
 
-* Partners * 
+*Partners* 
 
 | Id | trainerId | pkmnId | Location     |
 |----|-----------|--------|--------------|
