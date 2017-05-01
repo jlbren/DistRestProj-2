@@ -8,7 +8,6 @@
     <packaging>jar</packaging>
     <version>1.0-SNAPSHOT</version>
     <name>Sample-Service</name>
-
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -79,7 +78,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <mainClass>SampleService.Main</mainClass>
+                    <mainClass>Service.Main</mainClass>
                 </configuration>
             </plugin>
         </plugins>
