@@ -10,7 +10,7 @@ public class ChaosSource {
     public static IChaosBuilder ForDataAccess(String name) throws Exception {
 
         final int num = _rand.nextInt(ProbabilityOfProblem);
-        if(num == 1) {
+        if(num == -1) {
 
             final int whichProblem = _rand.nextInt(2);
             switch(whichProblem){
@@ -32,7 +32,7 @@ public class ChaosSource {
     public static IChaosBuilder ForService(String name) throws Exception {
 
         final int num = _rand.nextInt(ProbabilityOfProblem);
-        if(num == 1) {
+        if(num == -1) {
 
             final int whichProblem = _rand.nextInt(1);
             switch(whichProblem){
