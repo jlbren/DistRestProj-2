@@ -44,6 +44,9 @@ public class ExponentialBackoffMethodInstance implements ISingleMethodPolicy {
         if(_response.Message.contains("connection")) {
             return true;
         }
+        if(_response.Message.contains("Latency")) {
+            return true;
+        }
         return false;
     }
 

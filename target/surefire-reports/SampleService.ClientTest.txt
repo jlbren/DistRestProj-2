@@ -1,4 +1,16 @@
 -------------------------------------------------------------------------------
 Test set: SampleService.ClientTest
 -------------------------------------------------------------------------------
-Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.844 sec - in SampleService.ClientTest
+Tests run: 4, Failures: 0, Errors: 2, Skipped: 0, Time elapsed: 7.109 sec <<< FAILURE! - in SampleService.ClientTest
+testPokemon(SampleService.ClientTest)  Time elapsed: 1.578 sec  <<< ERROR!
+java.lang.RuntimeException: Pokemon not found
+	at Client.PokemonClient.ThrowFor(PokemonClient.java:103)
+	at Client.PokemonClient.getPokemon(PokemonClient.java:54)
+	at SampleService.ClientTest.testPokemon(ClientTest.java:100)
+
+testPartners(SampleService.ClientTest)  Time elapsed: 0.751 sec  <<< ERROR!
+java.lang.RuntimeException: Partner not found
+	at Client.PartnerClient.ThrowFor(PartnerClient.java:106)
+	at Client.PartnerClient.addPartner(PartnerClient.java:68)
+	at SampleService.ClientTest.testPartners(ClientTest.java:132)
+

@@ -34,7 +34,7 @@ public class PokemonClient {
 			String json = action.Get(address, HttpContentType.JSON);
 			response = PokemonResponse.FromJson(json);
 			method.HadResponse(response);
-			method.PerformWaitIfNeeded();
+			//method.PerformWaitIfNeeded();
 			method.ThrowErrorFromResponseIfAppropriate();
 		} while(method.ShouldRetry());
 		return response.Pokemons;

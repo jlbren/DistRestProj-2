@@ -3,9 +3,17 @@ package Data;
 import java.sql.*;
 
 public class ConnectionsFactory {
-	static final String JDBC_DRIVER = "org.sqlite.JDBC";
-	static final String DB_URL = "jdbc:sqlite:Pokedex.db";
+	  static final String hostName = "pkmndata";
+      static final String dbName = "pkmndb";
+      static final String user = "pkmn";
+      static final String password = "Pokemon123";
+      static final String DB_URL = String.format("jdbc:sqlserver://%s:1433;database=%s;user=%s;password=%s;"
+      		+ "encrypt=true;hostNameInCertificate=*;loginTimeout=30;", hostName, dbName, user, password);
 
+      static final String JDBC_DRIVER = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
+      
+     //static final String DB_URL = "jdbc:sqlserver://pkmndata.database.windows.net,1433;Initial Catalog=pkmndb;Persist Security Info=False;User ID=pkmn;Password=Pokemon123;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
+ 
 //	static final String USER = "root";
 //	static final String PASS = "class";
 

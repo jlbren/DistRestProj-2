@@ -17,7 +17,7 @@ public class PokemonDataAccessObject {
 		List<PokemonObject> pokemons = new ArrayList<PokemonObject>();
 		Database db = new Database();
 		try{
-			ChaosSource.ForDataAccess("Pokemon").ForMethod("ReadAllPokemon").run();
+			//ChaosSource.ForDataAccess("Pokemon").ForMethod("ReadAllPokemon").run();
 			db.ExecuteReader("Select * from " + TableName, (ResultSet row)->{
 				long id = row.getLong(row.findColumn(IdCol));
 				String name = row.getString(row.findColumn(NameCol)); 
