@@ -9,7 +9,7 @@ import Retries.ExponentialBackoffRetryPolicy;
 public class SimpleTest {
 
 	public static void main(String[] args) {
-    	PokemonClient client = new PokemonClient("http://localhost:8080/myapp/pokemon/", new ExponentialBackoffRetryPolicy());
+    	PokemonClient client = new PokemonClient("http://ubuntupkmn.cloudapp.net/myapp/pokemon/", new ExponentialBackoffRetryPolicy());
     	
 		PokemonObject[] all;
 		try {
